@@ -1,6 +1,6 @@
 -- This query needs to select the following columns:
 --
---   * From the "reipes" table:
+--   * From the "recipes" table:
 --     * id
 --     * title
 --     * created
@@ -17,3 +17,6 @@
 
 
 -- YOUR CODE HERE
+SELECT id, title, created, updated
+    from recipes
+    WHERE id = $1;

@@ -8,7 +8,7 @@
 -- user.
 
 -- YOUR CODE HERE
-
+SET ROLE recipe_box_app;
 
 
 
@@ -25,7 +25,12 @@
 -- | updated     | TIMESTAMP    | NOT NULL, DEFAULT CURRENT_TIMESTAMP |
 
 -- YOUR CODE HERE
-
+CREATE TABLE recipes (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 
 
@@ -47,7 +52,13 @@
 -- | recipe_id     | INTEGER     | FK, NOT NULL |
 
 -- YOUR CODE HERE
-
+CREATE TABLE instructions (
+    id SERIAL PRIMARY KEY,
+    specification TEXT NOT NULL,
+    list_order INT NOT NULL,
+    recipe_id INT NOT NULL,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
 
 
 
@@ -63,7 +74,10 @@
 -- | name        | VARCHAR(20) | NOT NULL    |
 
 -- YOUR CODE HERE
-
+CREATE TABLE units_of_measure (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(20) NOT NULL
+);
 
 
 
@@ -86,11 +100,15 @@
 -- | recipe_id          | INTEGER       | FK, NOT NULL |
 
 -- YOUR CODE HERE
-
-
-
-
-
+CREATE TABLE ingredients (
+    id SERIAL PRIMARY KEY,
+    amount NUMERIC(5,2) NOT NULL,
+    unit_of_measure_id INT NOT NULL,
+    food_stuff VARCHAR(500) NOT NULL,
+    recipe_id INT NOT NULL,
+    FOREIGN KEY (unit_of_measure_id) REFERENCES units_of_measure(id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
 
 
 -- HERE BEGINS THE SEED DATA
@@ -205,7 +223,7 @@ VALUES
 (7, 0.25, 1, 'dark honey'),
 (7, 0.25, 13, 'salt'),
 (7, 3, 12, 'cornstarch'),
-(7, 2, 12, 'unsalted butter, cut into small pieces')
+(7, 2, 12, 'unsalted butter, cut into small pieces');
 SELECT pg_catalog.setval(pg_get_serial_sequence('ingredients', 'id'), (SELECT MAX(id) FROM ingredients)+1);
 
 INSERT INTO instructions (recipe_id, list_order, specification)

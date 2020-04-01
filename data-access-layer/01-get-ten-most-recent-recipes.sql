@@ -1,6 +1,6 @@
 -- This query needs to select the following columns:
 --
---   * From the "reipes" table:
+--   * From the "recipes" table:
 --     * id
 --     * title
 --     * updated
@@ -16,3 +16,7 @@
 
 
 -- YOUR CODE HERE
+SELECT id, title, updated
+    FROM recipes
+    ORDER BY updated DESC
+    LIMIT 10;

@@ -1,7 +1,7 @@
 -- This query needs to select the following columns by searching the text in
 -- the "title" column:
 --
---   * From the "reipes" table:
+--   * From the "recipes" table:
 --     * id
 --     * title
 --     * updated
@@ -19,7 +19,11 @@
 -- https://www.postgresql.org/docs/current/functions-string.html
 --
 -- Pattern matching:
+-- https://www.postgresql.org/docs/current/functions-string.html
 -- https://www.postgresql.org/docs/current/functions-matching.html
 
 
 -- YOUR CODE HERE
+SELECT id, title, updated
+    FROM recipes
+    WHERE lower(title) LIKE lower($1) ;
